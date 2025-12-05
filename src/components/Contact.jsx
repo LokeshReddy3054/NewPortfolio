@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { resumeData } from '../data/resume';
-import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaLinkedin } from 'react-icons/fa';
+import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaLinkedin, FaFileDownload } from 'react-icons/fa';
 
 const Contact = () => {
     const { email, phone, location, linkedin } = resumeData.personalInfo;
@@ -88,9 +88,12 @@ const Contact = () => {
                                 </div>
                             </div>
 
-                            <div style={{ marginTop: '1rem', textAlign: 'center' }}>
-                                <a href={linkedin} target="_blank" rel="noreferrer" className="btn" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.8rem', padding: '1rem 2.5rem', fontSize: '1.1rem' }}>
+                            <div style={{ marginTop: '1rem', textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '1rem', width: '100%', maxWidth: '400px' }}>
+                                <a href={linkedin} target="_blank" rel="noreferrer" className="btn" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.8rem', padding: '1rem 2.5rem', fontSize: '1.1rem', width: '100%' }}>
                                     <FaLinkedin /> Connect on LinkedIn
+                                </a>
+                                <a href="/resume.pdf" download="Lokesh_Reddy_Polu_Resume.pdf" className="btn btn-outline" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.8rem', padding: '1rem 2.5rem', fontSize: '1.1rem', width: '100%' }}>
+                                    <FaFileDownload /> Download Resume
                                 </a>
                             </div>
                         </div>

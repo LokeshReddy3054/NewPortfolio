@@ -3,7 +3,7 @@ import { FaMobileAlt, FaServer, FaDatabase, FaMapMarkedAlt, FaWallet, FaCode } f
 export const resumeData = {
   personalInfo: {
     name: "Lokesh Reddy Polu",
-    role: "Flutter & Go Developer",
+    role: "Flutter, Go & PostgreSQL Developer",
     location: "Nellore, Andhra Pradesh",
     phone: "+91 7287035589",
     email: "lokeshreddypolu@gmail.com",
