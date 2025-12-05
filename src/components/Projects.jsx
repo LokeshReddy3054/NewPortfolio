@@ -18,173 +18,64 @@ const ProjectCard = ({ project, index }) => {
     return (
         <motion.div
             ref={ref}
-            style={{
-                display: 'flex',
-                flexDirection: isEven ? 'row' : 'row-reverse',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                marginBottom: '8rem',
-                position: 'relative',
-                gap: '4rem',
-                opacity
-            }}
-            className="project-card"
+            className={`project-card ${isEven ? 'even' : 'odd'}`}
+            style={{ opacity, y }} // Keep motion styles inline as they are dynamic
         >
             {/* Kanji Watermark */}
-            <div style={{
-                position: 'absolute',
-                top: '-20%',
-                left: isEven ? '5%' : 'auto',
-                right: isEven ? 'auto' : '5%',
-                fontSize: '15rem',
-                fontFamily: "'Noto Serif JP', serif",
-                color: 'var(--text-light)',
-                opacity: 0.03,
-                zIndex: 0,
-                pointerEvents: 'none',
-                lineHeight: 1
-            }}>
+            <div className="kanji-watermark">
                 {kanjiNumbers[index] || index + 1}
             </div>
 
             {/* Image Section */}
             <motion.div
-                style={{
-                    flex: '1.2',
-                    height: '400px',
-                    position: 'relative',
-                    perspective: '1000px'
-                }}
+                className="project-image-wrapper"
                 initial={{ opacity: 0, x: isEven ? -50 : 50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
                 viewport={{ once: true, margin: "-100px" }}
             >
-                <div
-                    className="project-image-container"
-                    style={{
-                        width: '100%',
-                        height: '100%',
-                        overflow: 'hidden',
-                        borderRadius: '2px',
-                        border: '1px solid var(--glass-border)',
-                        position: 'relative',
-                        background: 'var(--bg-card)'
-                    }}
-                >
-                    <div style={{
-                        position: 'absolute',
-                        inset: 0,
-                        background: project.image ? `url(${project.image}) center/cover no-repeat` : 'linear-gradient(45deg, var(--bg-dark), #1a1a1a)',
-                        transition: 'transform 0.7s ease',
-                        filter: 'grayscale(100%) contrast(1.1)',
-                    }} className="project-img-bg" />
+                <div className="project-image-container">
+                    <div
+                        className="project-img-bg"
+                        style={{
+                            background: project.image ? `url(${project.image}) center/cover no-repeat` : 'linear-gradient(45deg, var(--bg-dark), #1a1a1a)'
+                        }}
+                    />
 
                     {/* Overlay for depth */}
-                    <div style={{
-                        position: 'absolute',
-                        inset: 0,
-                        background: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.4) 100%)',
-                        zIndex: 1
-                    }} />
+                    <div className="project-overlay" />
 
                     {!project.image && (
-                        <div style={{
-                            position: 'absolute',
-                            inset: 0,
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            zIndex: 2
-                        }}>
-                            <span style={{
-                                fontSize: '4rem',
-                                fontFamily: "'Noto Serif JP', serif",
-                                color: 'var(--text-gray)',
-                                opacity: 0.3
-                            }}>
-                                {project.title[0]}
-                            </span>
+                        <div className="project-placeholder">
+                            <span>{project.title[0]}</span>
                         </div>
                     )}
                 </div>
 
                 {/* Decorative Frame */}
-                <div style={{
-                    position: 'absolute',
-                    top: '20px',
-                    left: isEven ? '20px' : '-20px',
-                    width: '100%',
-                    height: '100%',
-                    border: '1px solid var(--primary)',
-                    opacity: 0.3,
-                    zIndex: -1,
-                    transition: 'transform 0.4s ease'
-                }} className="project-frame" />
+                <div className="project-frame" />
             </motion.div>
 
             {/* Content Section */}
             <motion.div
-                style={{
-                    flex: '1',
-                    zIndex: 2,
-                    textAlign: isEven ? 'left' : 'right'
-                }}
+                className="project-content"
                 initial={{ opacity: 0, x: isEven ? 30 : -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
                 viewport={{ once: true }}
             >
-                <h3 style={{
-                    fontSize: '2.5rem',
-                    marginBottom: '1.5rem',
-                    color: 'var(--text-light)',
-                    position: 'relative',
-                    display: 'inline-block'
-                }}>
+                <h3 className="project-title">
                     {project.title}
-                    <span style={{
-                        position: 'absolute',
-                        bottom: '-5px',
-                        left: isEven ? 0 : 'auto',
-                        right: isEven ? 'auto' : 0,
-                        width: '40px',
-                        height: '2px',
-                        background: 'var(--primary)'
-                    }} />
+                    <span className="title-underline" />
                 </h3>
 
-                <p style={{
-                    fontSize: '1.1rem',
-                    color: 'var(--text-gray)',
-                    marginBottom: '2rem',
-                    lineHeight: '1.8',
-                    maxWidth: '90%',
-                    marginLeft: isEven ? 0 : 'auto'
-                }}>
+                <p className="project-description">
                     {project.description}
                 </p>
 
-                <div style={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    gap: '1rem',
-                    justifyContent: isEven ? 'flex-start' : 'flex-end',
-                    marginBottom: '2.5rem'
-                }}>
+                <div className="project-tech">
                     {project.tech.map((tech, i) => (
-                        <span
-                            key={i}
-                            style={{
-                                fontSize: '0.85rem',
-                                padding: '0.4rem 1rem',
-                                border: '1px solid var(--glass-border)',
-                                color: 'var(--text-light)',
-                                background: 'rgba(255,255,255,0.02)',
-                                letterSpacing: '1px',
-                                textTransform: 'uppercase'
-                            }}
-                        >
+                        <span key={i} className="tech-tag">
                             {tech}
                         </span>
                     ))}
@@ -220,7 +111,7 @@ const Projects = () => {
                     </p>
                 </motion.div>
 
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <div className="projects-list">
                     {projects.map((project, index) => (
                         <ProjectCard key={index} project={project} index={index} />
                     ))}
@@ -228,42 +119,192 @@ const Projects = () => {
             </div>
 
             <style>{`
+                .projects-list {
+                    display: flex;
+                    flex-direction: column;
+                }
+                .project-card {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    margin-bottom: 8rem;
+                    position: relative;
+                    gap: 4rem;
+                }
+                .project-card.even { flex-direction: row; }
+                .project-card.odd { flex-direction: row-reverse; }
+
+                .kanji-watermark {
+                    position: absolute;
+                    top: -20%;
+                    font-size: 15rem;
+                    font-family: 'Noto Serif JP', serif;
+                    color: var(--text-light);
+                    opacity: 0.03;
+                    z-index: 0;
+                    pointer-events: none;
+                    line-height: 1;
+                }
+                .project-card.even .kanji-watermark { left: 5%; }
+                .project-card.odd .kanji-watermark { right: 5%; }
+
+                .project-image-wrapper {
+                    flex: 1.2;
+                    height: 400px;
+                    position: relative;
+                    perspective: 1000px;
+                }
+                
+                .project-image-container {
+                    width: 100%;
+                    height: 100%;
+                    overflow: hidden;
+                    border-radius: 2px;
+                    border: 1px solid var(--glass-border);
+                    position: relative;
+                    background: var(--bg-card);
+                }
+
+                .project-img-bg {
+                    position: absolute;
+                    inset: 0;
+                    transition: transform 0.7s ease;
+                    filter: grayscale(100%) contrast(1.1);
+                }
+                
                 .project-image-container:hover .project-img-bg {
                     transform: scale(1.05);
                     filter: grayscale(0%) contrast(1);
                 }
+
+                .project-overlay {
+                    position: absolute;
+                    inset: 0;
+                    background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.4) 100%);
+                    z-index: 1;
+                }
+
+                .project-placeholder {
+                    position: absolute;
+                    inset: 0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 2;
+                }
+                .project-placeholder span {
+                    font-size: 4rem;
+                    font-family: 'Noto Serif JP', serif;
+                    color: var(--text-gray);
+                    opacity: 0.3;
+                }
+
+                .project-frame {
+                    position: absolute;
+                    top: 20px;
+                    width: 100%;
+                    height: 100%;
+                    border: 1px solid var(--primary);
+                    opacity: 0.3;
+                    z-index: -1;
+                    transition: transform 0.4s ease;
+                }
+                .project-card.even .project-frame { left: 20px; }
+                .project-card.odd .project-frame { left: -20px; }
+                
                 .project-card:hover .project-frame {
-                    transform: translate(${'10px, 10px'});
+                    transform: translate(10px, 10px);
                     opacity: 0.6;
                     border-color: var(--secondary);
                 }
+
+                .project-content {
+                    flex: 1;
+                    z-index: 2;
+                }
+                .project-card.even .project-content { text-align: left; }
+                .project-card.odd .project-content { text-align: right; }
+
+                .project-title {
+                    font-size: 2.5rem;
+                    margin-bottom: 1.5rem;
+                    color: var(--text-light);
+                    position: relative;
+                    display: inline-block;
+                }
+                
+                .title-underline {
+                    position: absolute;
+                    bottom: -5px;
+                    width: 40px;
+                    height: 2px;
+                    background: var(--primary);
+                }
+                .project-card.even .title-underline { left: 0; }
+                .project-card.odd .title-underline { right: 0; }
+
+                .project-description {
+                    font-size: 1.1rem;
+                    color: var(--text-gray);
+                    margin-bottom: 2rem;
+                    line-height: 1.8;
+                    max-width: 90%;
+                }
+                .project-card.odd .project-description { margin-left: auto; }
+
+                .project-tech {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 1rem;
+                }
+                .project-card.even .project-tech { justify-content: flex-start; }
+                .project-card.odd .project-tech { justify-content: flex-end; }
+
+                .tech-tag {
+                    font-size: 0.85rem;
+                    padding: 0.4rem 1rem;
+                    border: 1px solid var(--glass-border);
+                    color: var(--text-light);
+                    background: rgba(255,255,255,0.02);
+                    letter-spacing: 1px;
+                    text-transform: uppercase;
+                }
+
                 @media (max-width: 968px) {
-                    .project-card {
+                    .project-card, .project-card.even, .project-card.odd {
                         flex-direction: column !important;
-                        gap: 2rem !important;
-                        margin-bottom: 6rem !important;
+                        gap: 2rem;
+                        margin-bottom: 6rem;
                     }
-                    .project-card > div {
-                        text-align: left !important;
+                    .project-content, .project-card.even .project-content, .project-card.odd .project-content {
+                        text-align: left;
                         width: 100%;
                     }
-                    .project-card h3 span {
-                        left: 0 !important;
-                        right: auto !important;
+                    .kanji-watermark {
+                        display: none;
                     }
-                    .project-card p {
-                        margin-left: 0 !important;
-                    }
-                    .project-card div[style*="justify-content"] {
-                        justify-content: flex-start !important;
+                    .project-image-wrapper {
+                        width: 100%;
+                        height: 250px;
+                        flex: none;
                     }
                     .project-frame {
                         display: none;
+                    }
+                    .title-underline, .project-card.odd .title-underline {
+                        left: 0;
+                        right: auto;
+                    }
+                    .project-description, .project-card.odd .project-description {
+                        margin-left: 0;
+                        max-width: 100%;
+                    }
+                    .project-tech, .project-card.odd .project-tech {
+                        justify-content: flex-start;
                     }
                 }
             `}</style>
         </section>
     );
 };
-
 export default Projects;
